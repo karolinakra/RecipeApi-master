@@ -23,5 +23,6 @@ namespace RecipeApi.Models
         public string Body { get; set; }
 
         public Category Category { get; set; }
+        public int? CategoryId { get; set; }
     }
 }

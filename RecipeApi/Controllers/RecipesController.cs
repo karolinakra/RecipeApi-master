@@ -48,7 +48,7 @@ namespace RecipeApi.Controllers
 
             try
             {
-                var recipe = db.Recipes.SingleOrDefault(a => a.ID == id);
+                var recipe = db.Recipes.Include(a => a.Category).SingleOrDefault(a => a.ID == id);
                 if (recipe == null)
                 {
                     return NotFound($"Nie znaleziono id:{id}");
@@ -75,7 +75,7 @@ namespace RecipeApi.Controllers
             try
             {
                 //TODO add validation
-                if (ModelState.IsValid)
+                if (ModelState.IsValid && CategoryExists(recipe.CategoryId))
                 {
                     db.Recipes.Add(recipe);
                     db.SaveChanges();
@@ -145,5 +145,12 @@ namespace RecipeApi.Controllers
             }
         }
 
+        private bool CategoryExists(int? id)
+        { 
+            if(id == null)
+            return true;
+            return db.Categories.Any(a => a.ID == id);
+
+        }
     }
 }

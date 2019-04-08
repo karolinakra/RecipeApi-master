@@ -69,7 +69,7 @@ namespace RecipeApi.Controllers
         }
         [HttpPost]
 
-        public IActionResult AddCategories([FromBody]Category category)
+        public IActionResult AddCategories(Category category)
         {
             //return CreatedAtAction(nameof(GetRecipes), new { id = recipe.ID }, recipe);
 

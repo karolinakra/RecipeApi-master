@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecipeApi.Models;
 
@@ -15,35 +14,43 @@ namespace RecipeApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085");
 
             modelBuilder.Entity("RecipeApi.Models.Category", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                    b.Property<string>("Name");
 
                     b.HasKey("ID");
 
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("RecipeApi.Models.Key", b =>
+                {
+                    b.Property<string>("Name")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("ExpirationDate");
+
+                    b.Property<string>("Role");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Keys");
+                });
+
             modelBuilder.Entity("RecipeApi.Models.Recipe", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Body")
                         .IsRequired();
 
-                    b.Property<int?>("CategoryID");
+                    b.Property<int?>("CategoryId");
 
                     b.Property<string>("Image");
 
@@ -53,7 +60,7 @@ namespace RecipeApi.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CategoryID");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Recipes");
                 });
@@ -61,8 +68,8 @@ namespace RecipeApi.Migrations
             modelBuilder.Entity("RecipeApi.Models.Recipe", b =>
                 {
                     b.HasOne("RecipeApi.Models.Category", "Category")
-                        .WithMany("Recepies")
-                        .HasForeignKey("CategoryID");
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
                 });
 #pragma warning restore 612, 618
         }
