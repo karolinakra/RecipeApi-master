@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RecipeApi.Auth;
 using RecipeApi.Models;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace RecipeApi.Controllers
         }
 
         [HttpGet]
+        [KeyAuthorize(PolicyEnum.Reader)]
         public IActionResult GetRecipes()
         {
             try
@@ -67,7 +69,7 @@ namespace RecipeApi.Controllers
 
         }
         [HttpPost]
-
+        [KeyAuthorize(PolicyEnum.User)]
         public IActionResult AddRecipes([FromBody]Recipe recipe)
         {
             //return CreatedAtAction(nameof(GetRecipes), new { id = recipe.ID }, recipe);
@@ -124,6 +126,7 @@ namespace RecipeApi.Controllers
 
         }
         [HttpDelete("{id}")]
+        [KeyAuthorize(PolicyEnum.Admin)]
         public ActionResult<Recipe> DeleteRecepies(int id)
 
         {
